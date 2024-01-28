@@ -1,0 +1,43 @@
+#include <iostream>
+#include <sstream>
+#include <string>
+
+using namespace std;
+
+string timeConversion(string s) {
+    int hour, minute, second;
+    char am_pm;
+
+    // Extracting components from the input string
+    sscanf(s.c_str(), "%d:%d:%d%c", &hour, &minute, &second, &am_pm);
+
+    // Adjusting hour based on AM or PM
+    if (am_pm == 'P' || am_pm == 'p') {
+        if (hour != 12) {
+            hour += 12;
+        }
+    } else {
+        if (hour == 12) {
+            hour = 0;
+        }
+    }
+
+    // Formatting the result
+    char result[9];
+    snprintf(result, sizeof(result), "%02d:%02d:%02d", hour, minute, second);
+
+    return string(result);
+}
+
+int main() {
+    string inputTime;
+
+    // Read input line by line until there is no more input
+    while (getline(cin, inputTime)) {
+        // Calling the function and displaying the result
+        string result = timeConversion(inputTime);
+        cout << result << endl;
+    }
+
+    return 0;
+}
